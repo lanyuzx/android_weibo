@@ -1,10 +1,16 @@
 package com.lingyun.weibo;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lingyun.weibo.base.BaseActivity;
+import com.lingyun.weibo.helper.TokenHelper;
 import com.lingyun.weibo.utils.LogUtil;
+import com.lingyun.weibo.utils.SharedPreferencesUtil;
+import com.lingyun.weibo.utils.StringUtil;
 import com.lingyun.weibo.utils.ToastUtil;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 import com.sina.weibo.sdk.auth.WbAuthListener;
@@ -15,11 +21,11 @@ import butterknife.BindView;
 
 public class WBAuthActivity extends BaseActivity {
 
+    @BindView(R.id.wbauth_imageview)
+    ImageView mLauncherView;
+
     private  Oauth2AccessToken  mAccessToken;
     private SsoHandler  mSsoHandler;
-
-    @BindView(R.id.wbauth_token)
-    TextView mWbauthToken;
 
     @Override
     protected int getLayoutId() {
@@ -28,8 +34,26 @@ public class WBAuthActivity extends BaseActivity {
 
     @Override
     protected void setupData() {
-        mSsoHandler = new SsoHandler(WBAuthActivity.this);
-        mSsoHandler.authorize(new SelfWbAuthListener());
+        if (StringUtil.isBlank(TokenHelper.getToken())){
+            mLauncherView.setVisibility(View.GONE);
+            mSsoHandler = new SsoHandler(WBAuthActivity.this);
+            mSsoHandler.authorize(new SelfWbAuthListener());
+            return;
+        }
+        LogUtil.d("token =========" + TokenHelper.getToken());
+        mLauncherView.setVisibility(View.VISIBLE);
+        //当做启动页
+        Integer time = 2000;    //设置等待时间，单位为毫秒
+        Handler handler = new Handler();
+        //当计时结束时，跳转至主界面
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toActivity(MainActivity.class);
+                WBAuthActivity.this.finish();
+            }
+        }, time);
+
     }
 
     @Override
@@ -53,7 +77,9 @@ public class WBAuthActivity extends BaseActivity {
                 public void run() {
                     mAccessToken = token;
                     if (mAccessToken.isSessionValid()) {
-                        mWbauthToken.setText(mAccessToken.getToken());
+                        //保存本地token
+                        TokenHelper.setToken(mAccessToken.getToken());
+                        toActivity(MainActivity.class);
                         return;
                     }
                     ToastUtil.show(mContext,"token失效");
@@ -68,7 +94,7 @@ public class WBAuthActivity extends BaseActivity {
 
         @Override
         public void onFailure(WbConnectErrorMessage errorMessage) {
-            ToastUtil.show(mContext,errorMessage.getErrorMessage());
+            ToastUtil.show(mContext,errorMessage.getErrorCode());
         }
     }
 }

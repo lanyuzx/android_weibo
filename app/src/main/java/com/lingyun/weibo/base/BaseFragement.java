@@ -3,37 +3,32 @@ package com.lingyun.weibo.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.Fragment;
 
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.lingyun.weibo.R;
 
 import butterknife.ButterKnife;
 import butterknife.Optional;
 import butterknife.Unbinder;
 
-public abstract class BaseActivity extends  FragmentActivity{
+public abstract class BaseFragement extends Fragment {
 
     public static Context mContext;
     private Unbinder mUnbinder;
-
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        QMUIStatusBarHelper.translucent(this);
-        setContentView(getLayoutId());
-        mContext = this;
-        mUnbinder = ButterKnife.bind(this);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mContext = getContext();
+        mUnbinder = ButterKnife.bind(getActivity());
         setupView();
         setupData();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mUnbinder.unbind();
+        return inflater.inflate(getLayoutId(),container,false);
     }
 
     /**
@@ -52,5 +47,4 @@ public abstract class BaseActivity extends  FragmentActivity{
         Intent intent = new Intent(mContext, clazz);
         startActivity(intent);
     }
-
 }

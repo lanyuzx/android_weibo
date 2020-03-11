@@ -14,14 +14,16 @@
         android:supportsRtl="true"
         android:name=".base.BaseApp"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".WBAuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WBAuthActivity"/>
+
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>

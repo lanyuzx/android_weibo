@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="新浪微博token"
-        android:id="@+id/wbauth_token"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <ImageView
+        android:src="@drawable/launch_screen"
+        android:id="@+id/wbauth_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>
