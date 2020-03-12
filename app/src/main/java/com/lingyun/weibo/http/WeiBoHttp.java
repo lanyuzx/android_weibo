@@ -77,7 +77,7 @@ public class WeiBoHttp {
             @Override
             public void subscribe(ObservableEmitter<T> e) throws Exception {
                 if (response != null) {
-                    LogUtil.e(e.serialize().toString());
+                    e.onNext(response);
                 } else {
                     e.onError(new NoDataException());
                 }
