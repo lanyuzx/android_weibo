@@ -17,6 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
 
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -62,7 +63,7 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:3.7.0'
 
-    implementation 'com.sina.weibo.sdk:core:4.4.3:openDefaultRelease@aar'
+
 
 
 }

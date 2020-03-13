@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.lingyun.weibo.base.BaseActivity;
 import com.lingyun.weibo.classes.home.model.HomeModel;
+import com.lingyun.weibo.classes.oauth2.WBAuthActivity;
 import com.lingyun.weibo.helper.TokenHelper;
 import com.lingyun.weibo.http.WeiBoHttp;
 import com.lingyun.weibo.utils.LogUtil;
@@ -33,20 +34,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void setupData() {
 
-        Map map = new HashMap();
-        map.put("access_token", TokenHelper.getToken());
-        WeiBoHttp.userAttentionList(map).subscribe(new Consumer<HomeModel>() {
-            @Override
-            public void accept(HomeModel homeModel) throws Exception {
-
-                LogUtil.e("1");
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                LogUtil.e("2");
-            }
-        });
     }
 
     @Override
@@ -58,7 +45,7 @@ public class MainActivity extends BaseActivity {
     public void viewClick(View view){
         switch (view.getId()){
             case R.id.main_auth:
-
+               toActivity(WBAuthActivity.class);
                 break;
         }
     }
