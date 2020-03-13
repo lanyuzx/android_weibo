@@ -4,29 +4,22 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.view.View;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
-
-import com.lingyun.weibo.MainActivity;
 import com.lingyun.weibo.R;
 import com.lingyun.weibo.base.BaseActivity;
 import com.lingyun.weibo.classes.oauth2.model.WBAuthModel;
 import com.lingyun.weibo.constant.Constants;
+import com.lingyun.weibo.helper.LoadingDialog;
 import com.lingyun.weibo.helper.TokenHelper;
 import com.lingyun.weibo.http.WeiBoHttp;
 import com.lingyun.weibo.utils.LogUtil;
-import com.lingyun.weibo.utils.StringUtil;
 import com.lingyun.weibo.utils.ToastUtil;
-
-import java.util.Map;
-
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import retrofit2.http.Url;
 
 public class WBAuthActivity extends BaseActivity {
 
@@ -47,7 +40,10 @@ public class WBAuthActivity extends BaseActivity {
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                
+                if (url.equals(mWebUrl)){
+                    return;
+                }
+                LoadingDialog.start();
             }
 
             @Override
@@ -67,6 +63,11 @@ public class WBAuthActivity extends BaseActivity {
                     LogUtil.e(code);
                     setupAceessToken(code);
                 }
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                LoadingDialog.hidden();
             }
         });
     }
@@ -98,10 +99,12 @@ public class WBAuthActivity extends BaseActivity {
              //token保存到本地
                 TokenHelper.setToken(model.getAccess_token());
                 WBAuthActivity.this.finish();
+                LoadingDialog.hidden();
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                LoadingDialog.hidden();
                 LogUtil.e(throwable.getMessage());
                 ToastUtil.show(mContext,"授权失败,请重新操作");
                 mWebView.setVisibility(View.VISIBLE);
