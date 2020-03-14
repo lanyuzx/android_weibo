@@ -9,6 +9,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.lingyun.weibo.MainActivity;
 import com.lingyun.weibo.R;
 import com.lingyun.weibo.base.BaseActivity;
 import com.lingyun.weibo.classes.oauth2.model.WBAuthModel;
@@ -98,6 +100,7 @@ public class WBAuthActivity extends BaseActivity {
              LogUtil.e(model.toString());
              //token保存到本地
                 TokenHelper.setToken(model.getAccess_token());
+                toActivity(MainActivity.class);
                 WBAuthActivity.this.finish();
                 LoadingDialog.hidden();
             }

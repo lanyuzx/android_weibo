@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="AppColor">#e38e0b</color>
+    <color name="App333Color">#333333</color>
+    <color name="App666Color">#666666</color>
+    <color name="App999Color">#999999</color>
+    <color name="AppEFColor">#efefef</color>
 </resources>

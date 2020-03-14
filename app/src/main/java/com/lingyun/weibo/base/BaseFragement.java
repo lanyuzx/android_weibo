@@ -24,11 +24,12 @@ public abstract class BaseFragement extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view =  inflater.inflate(getLayoutId(),container,false);
         mContext = getContext();
-        mUnbinder = ButterKnife.bind(getActivity());
+        mUnbinder = ButterKnife.bind(this,view);
         setupView();
         setupData();
-        return inflater.inflate(getLayoutId(),container,false);
+        return  view;
     }
 
     /**

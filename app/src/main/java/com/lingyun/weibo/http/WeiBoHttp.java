@@ -8,6 +8,7 @@ import com.lingyun.weibo.base.BaseBean;
 import com.lingyun.weibo.classes.home.model.HomeModel;
 import com.lingyun.weibo.classes.oauth2.model.WBAuthModel;
 import com.lingyun.weibo.constant.Constants;
+import com.lingyun.weibo.helper.TokenHelper;
 import com.lingyun.weibo.utils.LogUtil;
 import com.lingyun.weibo.utils.ToastUtil;
 
@@ -65,6 +66,16 @@ public class WeiBoHttp {
             .addConverterFactory(GsonConverterFactory.create(gson))//设置 Json 转换器
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//RxJava 适配器
             .build();
+
+    public static Observable<HomeModel> homeTimeLine() {
+        Map map = new HashMap();
+        map.put("access_token", TokenHelper.getToken());
+        return mRetrofit.create(WeiBoApi.class)
+                .homeTimeLine(map)
+                .subscribeOn(Schedulers.io())
+                .compose(ResponseTransformer.handleResult())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
     public static Observable<WBAuthModel> oauth2AccessToken(String code) {
         Map map = new HashMap();

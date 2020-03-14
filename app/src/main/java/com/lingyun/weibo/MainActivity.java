@@ -58,10 +58,10 @@ public class MainActivity extends BaseActivity {
         mFragmentList.add(new DiscoverFragement());
         mFragmentList.add(new MineFragement());
 
-        mNavigationItemList.add(new BottomNavigationItem(R.mipmap.ic_launcher_round,"首页").setInactiveIconResource(R.mipmap.ic_launcher_round));
-        mNavigationItemList.add(new BottomNavigationItem(R.mipmap.ic_launcher_round,"消息").setInactiveIconResource(R.mipmap.ic_launcher_round));
-        mNavigationItemList.add(new BottomNavigationItem(R.mipmap.ic_launcher_round,"发现").setInactiveIconResource(R.mipmap.ic_launcher_round));
-        mNavigationItemList.add(new BottomNavigationItem(R.mipmap.ic_launcher_round,"我的").setInactiveIconResource(R.mipmap.ic_launcher_round));
+        mNavigationItemList.add(new BottomNavigationItem(R.mipmap.ic_tabbar_home_highlighted,"首页").setInactiveIconResource(R.mipmap.ic_tabbar_home));
+        mNavigationItemList.add(new BottomNavigationItem(R.mipmap.ic_tabbar_message_center_highlighted,"消息").setInactiveIconResource(R.mipmap.ic_tabbar_message_center));
+        mNavigationItemList.add(new BottomNavigationItem(R.mipmap.ic_tabbar_discover_highlighted,"发现").setInactiveIconResource(R.mipmap.ic_tabbar_discover));
+        mNavigationItemList.add(new BottomNavigationItem(R.mipmap.ic_tabbar_profile_highlighted,"我的").setInactiveIconResource(R.mipmap.ic_tabbar_profile));
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.main_container, mFragmentList.get(0), "home")
@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity {
         mBottomNavigationBar
                 .setMode(BottomNavigationBar.MODE_FIXED) // 设置mode
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_RIPPLE)  // 背景样式
-                .setBarBackgroundColor("#F12423") // 背景颜色
+                .setBarBackgroundColor(R.color.AppColor) // 背景颜色
                 .setInActiveColor("#999999") // 未选中状态颜色
                 .setActiveColor("#ffffff") // 选中状态颜色
                 .addItem(mNavigationItemList.get(0)) // 添加Item
@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onTabSelected(int position) {
                         for (int i = 0 ;i< mFragmentList.size();i++) {
-                            Fragment fragment =  mFragmentList.get(0);
+                            Fragment fragment =  mFragmentList.get(i);
                             if (position == i) {
                                 getSupportFragmentManager().beginTransaction().show(fragment).commit();
                             }else  {

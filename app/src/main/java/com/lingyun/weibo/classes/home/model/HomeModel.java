@@ -16,7 +16,7 @@ public class HomeModel {
 
 
 
-    class  HomeStatusesModel {
+   public   class  HomeStatusesModel {
         private Map visible;
         private String created_at;
         private  Long id;
@@ -41,7 +41,7 @@ public class HomeModel {
         private HomeUserModel user;
 
 
-        class HomeUserModel {
+       public class HomeUserModel {
 
             private Long id;
             private Long idstr;
@@ -68,6 +68,8 @@ public class HomeModel {
             private String avatar_large;
             private String avatar_hd;
             private String verified_reason;
+
+            private String created_at;
 
 
             public Long getId() {
@@ -261,7 +263,15 @@ public class HomeModel {
             public void setVerified_reason(String verified_reason) {
                 this.verified_reason = verified_reason;
             }
-        }
+
+           public String getCreated_at() {
+               return created_at;
+           }
+
+           public void setCreated_at(String created_at) {
+               this.created_at = created_at;
+           }
+       }
 
 
         public Map getVisible() {
