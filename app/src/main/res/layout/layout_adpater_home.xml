@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -47,13 +48,14 @@
                     android:layout_height="wrap_content"/>
                 <ImageView
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="3dp"
                     android:id="@+id/home_adpater_level"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"/>
             </LinearLayout>
 
             <TextView
+                android:id="@+id/home_adpater_source"
                 android:layout_marginTop="5dp"
                 android:text="13分钟前   来源自weibo.com"
                 android:textSize="10sp"
@@ -63,4 +65,29 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/home_adpater_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:textSize="14dp"
+        android:textColor="@color/App333Color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:layout_marginTop="5dp"
+        android:id="@+id/home_adpater_biglagre_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_adpater_grid_imageview"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

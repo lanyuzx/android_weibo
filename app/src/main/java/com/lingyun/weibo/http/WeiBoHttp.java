@@ -1,9 +1,11 @@
 package com.lingyun.weibo.http;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.lingyun.weibo.BuildConfig;
 import com.lingyun.weibo.base.BaseBean;
 import com.lingyun.weibo.classes.home.model.HomeModel;
 import com.lingyun.weibo.classes.oauth2.model.WBAuthModel;
@@ -13,7 +15,9 @@ import com.lingyun.weibo.utils.LogUtil;
 import com.lingyun.weibo.utils.ToastUtil;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
+import java.net.URLDecoder;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,29 +36,41 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeiBoHttp {
 
+
+    private static HttpLoggingInterceptor loggingInterceptor() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                try {
+                    String text = URLDecoder.decode(message, "utf-8");
+                    LogUtil.e("OKHttp-----", text);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    LogUtil.e("OKHttp-----", message);
+                }
+            }
+        });
+        //这里可以builder(). 添加更多的内容 具体看需求
+//        mClient = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        //这行必须加 不然默认不打印
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return  interceptor;
+    }
+
+//    //这行必须加 不然默认不打印
+
     private static OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(20, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
-            .addInterceptor(new Interceptor() {
-                @Override
-                public Response intercept(Chain chain) throws IOException {
-                    Request originalRequest = chain.request();
-                    Request request;
-                    HttpUrl modifiedUrl = originalRequest.url().newBuilder()
-                            // Provide your custom parameter here
-//                            .addQueryParameter("token", UserHelper.getUser().getToken())
-                            .build();
-                    request = originalRequest.newBuilder().url(modifiedUrl).build();
-                    return chain.proceed(request);
-                }
-            })
+            .addInterceptor(loggingInterceptor())
             .build();
    private static Gson gson = new GsonBuilder()
             .setLenient()
