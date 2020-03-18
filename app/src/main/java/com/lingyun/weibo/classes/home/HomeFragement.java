@@ -11,6 +11,7 @@ import com.lingyun.weibo.classes.home.adpater.HomeAdpater;
 import com.lingyun.weibo.classes.home.model.HomeModel;
 import com.lingyun.weibo.http.WeiBoHttp;
 import com.lingyun.weibo.utils.LogUtil;
+import com.lingyun.weibo.utils.ToastUtil;
 
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
@@ -38,6 +39,7 @@ public class HomeFragement extends BaseFragement {
             @Override
             public void accept(Throwable throwable) throws Exception {
                 LogUtil.e(throwable.toString());
+                ToastUtil.show(mContext,throwable.getMessage());
             }
         });
     }
@@ -45,7 +47,6 @@ public class HomeFragement extends BaseFragement {
     @Override
     protected void setupView() {
         mTitleView.setText("首页");
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mHomeAdpater =  new HomeAdpater(null);
         mRecyclerView.setAdapter(mHomeAdpater);
     }

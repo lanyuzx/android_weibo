@@ -40,6 +40,9 @@ public class HomeModel {
 
         private HomeUserModel user;
 
+        //转发微博
+        private HomeRetweetedStatusModel  retweeted_status;
+
 
        public class HomeUserModel {
 
@@ -274,6 +277,38 @@ public class HomeModel {
        }
 
 
+       public class HomeRetweetedStatusModel {
+
+           private String text;
+           private HomeUserModel user;
+           private List<Map> pic_urls;
+
+           public String getText() {
+               return text;
+           }
+
+           public void setText(String text) {
+               this.text = text;
+           }
+
+           public HomeUserModel getUser() {
+               return user;
+           }
+
+           public void setUser(HomeUserModel user) {
+               this.user = user;
+           }
+
+           public List<Map> getPic_urls() {
+               return pic_urls;
+           }
+
+           public void setPic_urls(List<Map> pic_urls) {
+               this.pic_urls = pic_urls;
+           }
+       }
+
+
         public Map getVisible() {
             return visible;
         }
@@ -425,7 +460,15 @@ public class HomeModel {
         public void setUser(HomeUserModel user) {
             this.user = user;
         }
-    }
+
+       public HomeRetweetedStatusModel getRetweeted_status() {
+           return retweeted_status;
+       }
+
+       public void setRetweeted_status(HomeRetweetedStatusModel retweeted_status) {
+           this.retweeted_status = retweeted_status;
+       }
+   }
 
 
     public List<HomeStatusesModel> getStatuses() {
