@@ -71,6 +71,16 @@ public class WeiBoHttp {
             .writeTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .addInterceptor(loggingInterceptor())
+            .addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request request = chain.request()
+                            .newBuilder()
+                            .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+                            .build();
+                    return chain.proceed(request);
+                }
+            })
             .build();
    private static Gson gson = new GsonBuilder()
             .setLenient()

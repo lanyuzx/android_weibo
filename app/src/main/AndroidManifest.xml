@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:largeHeap="true"
         android:hardwareAccelerated="false"
         android:allowBackup="true"

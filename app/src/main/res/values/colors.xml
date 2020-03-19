@@ -8,4 +8,5 @@
     <color name="App666Color">#666666</color>
     <color name="App999Color">#999999</color>
     <color name="AppEFColor">#efefef</color>
+    <color name="AppFFColor">#ffffff</color>
 </resources>

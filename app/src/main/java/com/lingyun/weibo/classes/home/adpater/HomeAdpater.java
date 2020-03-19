@@ -1,10 +1,12 @@
 package com.lingyun.weibo.classes.home.adpater;
 
+import android.graphics.Rect;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
@@ -34,9 +36,11 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class HomeAdpater extends BaseQuickAdapter<HomeModel.HomeStatusesModel, BaseViewHolder> {
 
     private GridLayoutAdpater mGridLayoutAdpater;
+    private GridLayoutAdpater mLargeGridLayoutAdpater;
     public HomeAdpater( @Nullable List<HomeModel.HomeStatusesModel> data) {
         super(R.layout.layout_adpater_home, data);
-        mGridLayoutAdpater = new  GridLayoutAdpater(null);
+        mGridLayoutAdpater  =  new  GridLayoutAdpater(null,false);
+        mLargeGridLayoutAdpater =  new  GridLayoutAdpater(null,true);
     }
 
     @Override
@@ -78,40 +82,74 @@ public class HomeAdpater extends BaseQuickAdapter<HomeModel.HomeStatusesModel, B
         contentView.setText(item.getText());
 
         LinearLayout linearLayout = helper.getView(R.id.home_adpater_retweeted);
+        linearLayout.setVisibility(View.VISIBLE);
+        TextView retweetedTextView = helper.getView(R.id.home_adpater_retweeted_title);
+        RecyclerView picRecyclerView = helper.getView(R.id.home_adpater_retweeted_recyclerView);
         //是转发微博
         if (item.getRetweeted_status() != null) {
-            linearLayout.setVisibility(View.VISIBLE);
-            TextView retweetedTextView = helper.getView(R.id.home_adpater_retweeted_title);
+            linearLayout.setBackgroundColor(0xEFEFEF);
+            retweetedTextView.setVisibility(View.VISIBLE);
             retweetedTextView.setText("@" + item.getRetweeted_status().getUser().getName() + ":" + item.getRetweeted_status().getText());
-
-            RecyclerView picRecyclerView = helper.getView(R.id.home_adpater_retweeted_recyclerView);
+            if (item.getRetweeted_status().getPic_urls() == null){
+                picRecyclerView.setVisibility(View.GONE);
+                return;
+            }
+            picRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                @Override
+                public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                    outRect.set(10, 5,10,5);
+                }
+            });
             if (item.getRetweeted_status().getPic_urls().size() == 0){
                 picRecyclerView.setVisibility(View.GONE);
                 return;
             }
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
-            picRecyclerView.setLayoutManager(gridLayoutManager);
-
             List<String> picList = new ArrayList<>();
             for (Map map : item.getRetweeted_status().getPic_urls()) {
                 picList.add((String) map.get("thumbnail_pic"));
             }
-            picRecyclerView.setAdapter(mGridLayoutAdpater);
-            mGridLayoutAdpater.addData(picList);
+            if (picList.size() == 1) {
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1);
+                picRecyclerView.setLayoutManager(gridLayoutManager);
+                picRecyclerView.setAdapter(mLargeGridLayoutAdpater);
+                mLargeGridLayoutAdpater.setNewData(picList);
+            }else  {
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
+                picRecyclerView.setLayoutManager(gridLayoutManager);
+                picRecyclerView.setAdapter(mGridLayoutAdpater);
+                mGridLayoutAdpater.setNewData(picList);
+            }
+
 
         }else  { //不是转发微博
-            linearLayout.setVisibility(View.GONE);
+            linearLayout.setBackgroundColor(0xffffff);
+            retweetedTextView.setVisibility(View.GONE);
+            if (((List)item.getPic_urls()).size() == 0){
+                picRecyclerView.setVisibility(View.GONE);
+                return;
+            }
+            List<String> picList = new ArrayList<>();
+            for (Map map : item.getPic_urls()) {
+                picList.add((String) map.get("thumbnail_pic"));
+            }
+            picRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                @Override
+                public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                    outRect.set(10, 5,10,5);
+                }
+            });
+            if (picList.size() == 1) {
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1);
+                picRecyclerView.setLayoutManager(gridLayoutManager);
+                picRecyclerView.setAdapter(mLargeGridLayoutAdpater);
+                mLargeGridLayoutAdpater.setNewData(picList);
+            }else  {
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
+                picRecyclerView.setLayoutManager(gridLayoutManager);
+                picRecyclerView.setAdapter(mGridLayoutAdpater);
+                mGridLayoutAdpater.setNewData(picList);
+            }
         }
-
-//        ImageView lagreImageView = helper.getView(R.id.home_adpater_biglagre_imageview);
-//        List<String> picUrls = (List<String>) item.getPic_urls();
-//        if (picUrls.size() == 0){
-//            lagreImageView.setVisibility(View.VISIBLE);
-//            Glide.with(mContext).load(item.getUser().getCover_image_phone()).into(lagreImageView);
-//        }
-
-
-
 
     }
 }

@@ -32,7 +32,7 @@ public class HomeModel {
         private  String source;
         private   Boolean favorited;
         private  Boolean truncated;
-        private Object pic_urls;
+        private List<Map> pic_urls;
 
         private String thumbnail_pic;
         private  String bmiddle_pic;
@@ -421,11 +421,11 @@ public class HomeModel {
             this.truncated = truncated;
         }
 
-        public Object getPic_urls() {
+        public List<Map> getPic_urls() {
             return pic_urls;
         }
 
-        public void setPic_urls(Object pic_urls) {
+        public void setPic_urls(List pic_urls) {
             this.pic_urls = pic_urls;
         }
 
