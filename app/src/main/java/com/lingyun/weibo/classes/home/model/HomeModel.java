@@ -43,6 +43,12 @@ public class HomeModel {
         //转发微博
         private HomeRetweetedStatusModel  retweeted_status;
 
+        private Long reposts_count;
+       private Long comments_count;
+       private Long attitudes_count;
+
+       private Boolean following;
+
 
        public class HomeUserModel {
 
@@ -425,9 +431,9 @@ public class HomeModel {
             return pic_urls;
         }
 
-        public void setPic_urls(List pic_urls) {
-            this.pic_urls = pic_urls;
-        }
+       public void setPic_urls(List<Map> pic_urls) {
+           this.pic_urls = pic_urls;
+       }
 
         public String getThumbnail_pic() {
             return thumbnail_pic;
@@ -467,6 +473,38 @@ public class HomeModel {
 
        public void setRetweeted_status(HomeRetweetedStatusModel retweeted_status) {
            this.retweeted_status = retweeted_status;
+       }
+
+       public Long getReposts_count() {
+           return reposts_count;
+       }
+
+       public void setReposts_count(Long reposts_count) {
+           this.reposts_count = reposts_count;
+       }
+
+       public Long getComments_count() {
+           return comments_count;
+       }
+
+       public void setComments_count(Long comments_count) {
+           this.comments_count = comments_count;
+       }
+
+       public Long getAttitudes_count() {
+           return attitudes_count;
+       }
+
+       public void setAttitudes_count(Long attitudes_count) {
+           this.attitudes_count = attitudes_count;
+       }
+
+       public Boolean getFollowing() {
+           return following;
+       }
+
+       public void setFollowing(Boolean following) {
+           this.following = following;
        }
    }
 

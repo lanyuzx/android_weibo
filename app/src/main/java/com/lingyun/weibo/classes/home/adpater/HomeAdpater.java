@@ -81,6 +81,39 @@ public class HomeAdpater extends BaseQuickAdapter<HomeModel.HomeStatusesModel, B
         TextView contentView = helper.getView(R.id.home_adpater_content);
         contentView.setText(item.getText());
 
+        setupImageViews(helper,item);
+
+        TextView retweetTextView = helper.getView(R.id.home_adpater_retweet);
+        if (item.getReposts_count() == 0) {
+            retweetTextView.setText("转发");
+        }else  {
+            retweetTextView.setText(item.getReposts_count().toString());
+        }
+
+        TextView commentTextView = helper.getView(R.id.home_adpater_comment);
+        if (item.getComments_count() == 0) {
+            commentTextView.setText("评论");
+        }else  {
+            commentTextView.setText(item.getComments_count().toString());
+        }
+
+        TextView likeTextView = helper.getView(R.id.home_adpater_like);
+        if (item.getAttitudes_count() == 0) {
+            likeTextView.setText("评论");
+        }else  {
+            likeTextView.setText(item.getAttitudes_count().toString());
+        }
+
+        ImageView  likeImageView = helper.getView(R.id.home_adpater_like_imageview);
+        if (item.getFollowing()!= null &&item.getFollowing()) {
+            likeImageView.setBackgroundResource(R.mipmap.ic_timeline_icon_like);
+        }else  {
+            likeImageView.setBackgroundResource(R.mipmap.ic_timeline_icon_unlike);
+        }
+
+    }
+
+    private void setupImageViews(BaseViewHolder helper, HomeModel.HomeStatusesModel item) {
         LinearLayout linearLayout = helper.getView(R.id.home_adpater_retweeted);
         linearLayout.setVisibility(View.VISIBLE);
         TextView retweetedTextView = helper.getView(R.id.home_adpater_retweeted_title);
@@ -150,6 +183,6 @@ public class HomeAdpater extends BaseQuickAdapter<HomeModel.HomeStatusesModel, B
                 mGridLayoutAdpater.setNewData(picList);
             }
         }
-
     }
+
 }

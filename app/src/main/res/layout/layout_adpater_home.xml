@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/AppFFColor"
     android:layout_height="wrap_content">
@@ -68,6 +69,97 @@
         android:layout_height="wrap_content"/>
 
 <include android:visibility="gone"  layout="@layout/layout_adpater_home_retweeted"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+        <View
+            android:background="@color/AppEFColor"
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"/>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_timeline_icon_retweet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/home_adpater_retweet"
+                android:layout_marginLeft="5dp"
+                android:textSize="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/App666Color"
+                android:text="转发"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_timeline_icon_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/home_adpater_comment"
+                android:layout_marginLeft="5dp"
+                android:textSize="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/App666Color"
+                android:text="评论"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:layout_marginLeft="12dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/home_adpater_like_imageview"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/ic_timeline_icon_unlike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/home_adpater_like"
+                android:layout_marginLeft="5dp"
+                android:textSize="10dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/App666Color"
+                android:text="点赞"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+    <View
+        android:background="@color/AppEFColor"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
 
 
 </LinearLayout>
