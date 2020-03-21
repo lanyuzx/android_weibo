@@ -93,9 +93,7 @@ public class WeiBoHttp {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//RxJava 适配器
             .build();
 
-    public static Observable<HomeModel> homeTimeLine() {
-        Map map = new HashMap();
-        map.put("access_token", TokenHelper.getToken());
+    public static Observable<HomeModel> homeTimeLine(Map map) {
         return mRetrofit.create(WeiBoApi.class)
                 .homeTimeLine(map)
                 .subscribeOn(Schedulers.io())

@@ -21,6 +21,7 @@ public abstract class BaseFragement extends Fragment {
 
     public static Context mContext;
     private Unbinder mUnbinder;
+    public  Integer mPageIndex = 1;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
