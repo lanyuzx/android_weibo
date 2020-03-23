@@ -80,6 +80,7 @@
 
 
         <LinearLayout
+            android:id="@+id/home_adpater_retweet_view"
             android:orientation="horizontal"
             android:layout_marginLeft="12dp"
             android:layout_centerVertical="true"

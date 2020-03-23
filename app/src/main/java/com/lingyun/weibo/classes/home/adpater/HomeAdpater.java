@@ -1,9 +1,12 @@
 package com.lingyun.weibo.classes.home.adpater;
 
 import android.graphics.Rect;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,23 +32,36 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import androidx.core.widget.PopupWindowCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class HomeAdpater extends BaseQuickAdapter<HomeModel.HomeStatusesModel, BaseViewHolder> {
 
     private GridLayoutAdpater mGridLayoutAdpater;
     private GridLayoutAdpater mLargeGridLayoutAdpater;
+    private RetweetPopWindow mRetweetPopWindow;
     public HomeAdpater( @Nullable List<HomeModel.HomeStatusesModel> data) {
         super(R.layout.layout_adpater_home, data);
         mGridLayoutAdpater  =  new  GridLayoutAdpater(null,false);
         mLargeGridLayoutAdpater =  new  GridLayoutAdpater(null,true);
+
+    }
+
+    @OnClick(R.id.home_adpater_retweet_view)
+    public void viewClick(View view) {
+        switch (view.getId()) {
+            case R.id.home_adpater_retweet_view: //转发微博
+               LogUtil.e("转发微博");
+                mRetweetPopWindow = RetweetPopWindow.show(mContext,view);
+                break;
+        }
     }
 
     @Override
     protected void convert(BaseViewHolder helper, HomeModel.HomeStatusesModel item) {
-
        ImageView iconImageView = helper.getView(R.id.home_adpater_icon);
 
         Glide.with(mContext)
@@ -82,6 +98,13 @@ public class HomeAdpater extends BaseQuickAdapter<HomeModel.HomeStatusesModel, B
         contentView.setText(item.getText());
 
         setupImageViews(helper,item);
+
+        helper.getView(R.id.home_adpater_retweet_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewClick(v);
+            }
+        });
 
         TextView retweetTextView = helper.getView(R.id.home_adpater_retweet);
         if (item.getReposts_count() == 0) {
