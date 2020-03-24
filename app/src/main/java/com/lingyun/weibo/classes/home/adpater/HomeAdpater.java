@@ -50,16 +50,6 @@ public class HomeAdpater extends BaseQuickAdapter<HomeModel.HomeStatusesModel, B
 
     }
 
-    @OnClick(R.id.home_adpater_retweet_view)
-    public void viewClick(View view) {
-        switch (view.getId()) {
-            case R.id.home_adpater_retweet_view: //转发微博
-               LogUtil.e("转发微博");
-                mRetweetPopWindow = RetweetPopWindow.show(mContext,view);
-                break;
-        }
-    }
-
     @Override
     protected void convert(BaseViewHolder helper, HomeModel.HomeStatusesModel item) {
        ImageView iconImageView = helper.getView(R.id.home_adpater_icon);
@@ -99,13 +89,6 @@ public class HomeAdpater extends BaseQuickAdapter<HomeModel.HomeStatusesModel, B
 
         setupImageViews(helper,item);
 
-        helper.getView(R.id.home_adpater_retweet_view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewClick(v);
-            }
-        });
-
         TextView retweetTextView = helper.getView(R.id.home_adpater_retweet);
         if (item.getReposts_count() == 0) {
             retweetTextView.setText("转发");
@@ -128,11 +111,30 @@ public class HomeAdpater extends BaseQuickAdapter<HomeModel.HomeStatusesModel, B
         }
 
         ImageView  likeImageView = helper.getView(R.id.home_adpater_like_imageview);
-        if (item.getFollowing()!= null &&item.getFollowing()) {
+        if (item.getFavorited()!= null &&item.getFavorited()) {
             likeImageView.setBackgroundResource(R.mipmap.ic_timeline_icon_like);
         }else  {
             likeImageView.setBackgroundResource(R.mipmap.ic_timeline_icon_unlike);
         }
+
+        helper.getView(R.id.home_adpater_retweet_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRetweetPopWindow = RetweetPopWindow.show(mContext,v);
+            }
+        });
+        helper.getView(R.id.home_adpater_like_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (item.getFavorited() == null) {
+                    item.setFavorited(true);
+                    notifyDataSetChanged();
+                    return;
+                }
+                item.setFavorited(!item.getFavorited());
+                notifyDataSetChanged();
+            }
+        });
 
     }
 

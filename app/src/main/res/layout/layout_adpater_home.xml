@@ -128,6 +128,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/home_adpater_like_view"
             android:layout_marginRight="12dp"
             android:layout_alignParentRight="true"
             android:orientation="horizontal"
